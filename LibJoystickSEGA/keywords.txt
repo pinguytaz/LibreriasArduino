@@ -1,0 +1,32 @@
+#######################################
+# Tipos de datos (KEYWORD1)
+#######################################
+JoystickSEGA	KEYWORD1
+BTN		KEYWORD1
+pf_cambioBoton	KEYWORD1
+
+#######################################
+# Metodos publicos y funciones (KEYWORD2)
+#######################################
+iniciaJoystickSEGA	KEYWORD2
+leeBotones		KEYWORD2
+
+#######################################
+# Constantes (LITERAL1)
+#######################################
+
+############## Boton que se pulsa o suelta.
+BTN_Arriba	LITERAL1 	
+BTN_Abajo	LITERAL1
+BTN_Izq		LITERAL1
+BTN_Der		LITERAL1
+BTN_Start	LITERAL1
+BTN_A		LITERAL1
+BTN_B		LITERAL1
+BTN_C		LITERAL1
+BTN_X		LITERAL1
+BTN_Y		LITERAL1
+BTN_Z		LITERAL1
+BTN_Mode	LITERAL1
+
+
