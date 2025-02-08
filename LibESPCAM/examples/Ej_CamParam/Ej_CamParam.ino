@@ -4,7 +4,10 @@
  *
  *  Descripción: Ejemplo AI Thinker ESP32-CAM
  *               Genera Página WEB para ver streaming y cambiar parametros desde esta
- *               
+ *
+ *    Conectarse a la red WIFI definida en las variables: ssid y clave
+ *    En el monitor serie indicara la dirección IP pero esta definida a 192.168.50.1 y el
+ *    puerto es el 8080 por lo tanto en el navegador http://192.168.50.1:8080/
  ***********************************************************************************************/
 #include "LibESPCAM.h"    // Cabecera de funciones
 #include "PaginaRaiz.h"

@@ -8,6 +8,7 @@
  *  NOTAS: Para RGB se recomienda capturar en JPEG y luego convertir 
  * 
  *  Version 1.0 Mayo 2023
+ *  Versión 1.1: Febrero 2025  Se modifica para que funcione con version 3 del API ESP
  **********************************************************/
 #include "LibESPCAM.h"
 
@@ -70,8 +71,15 @@ esp_err_t ESPCAM::iniciaCAM(void)
   
 
    // Incializamos Flash
+   /*    Codigo de V2 del API de ESP
    ledcSetup(LED_LEDC_CHANNEL, 5000, 8);
    ledcAttachPin(LED_GPIO_NUM, LED_LEDC_CHANNEL);
+   */
+   ledcAttachChannel(LED_GPIO_NUM, 5000, 8, LED_LEDC_CHANNEL);
+   //bool ledcAttachChannel(uint8_t pin, uint32_t freq, uint8_t resolution, int8_t channel);
+
+   
+
    Flash(Apagado);  // Inicialmente apagamos el Flash
 
    //Configuramos LED Rojo

@@ -3,6 +3,7 @@
 
 
 __Libreria Lib_ESPCAM__
+Actualizada a API V3 de ESP32
 
 Libreria para la gestion y programación de la placas con camaras de ESP32, en este momento se ha realizado para AI-Thinker con la camara OV264.
 
