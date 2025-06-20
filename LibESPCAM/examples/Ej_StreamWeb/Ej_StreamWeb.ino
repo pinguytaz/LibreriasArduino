@@ -4,6 +4,7 @@
  *
  *  Descripción: Ejemplo AI Thinker ESP32-CAM
  *               Genera Página WEB para ver streaming
+ *             Conectar http://192.168.50.1:8080 ll
  *               
  ***********************************************************************************************/
 #include "LibESPCAM.h"    // Cabecera de funciones
@@ -25,7 +26,7 @@ static const char* _STREAM_PART = "Content-Type: image/jpeg\r\nContent-Length: %
 // Credenciales de nuestra red WIFI de nuestro AP para que se conecten otros
 // ================================
 const char *ssid = "LaCamara";
-const char *clave = "LaClave-debeserlarga";
+const char *clave = "LaClaveLarga";
 
 
 ESPCAM Camara(10, FRAMESIZE_VGA, 1, CAMERA_GRAB_WHEN_EMPTY );

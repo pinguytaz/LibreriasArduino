@@ -4,6 +4,7 @@
  *  Descripción: Cabecera LibESPCAM
  *
  *  Version 1.0 Mayo 2023
+ *  Versión 2.0: Junuo 2025    Se añaden nuevos metodos 
  **********************************************************/
 #ifndef LIBESPCAM_H
 #define LIBESPCAM_H
@@ -21,6 +22,7 @@ class ESPCAM
    private:
      camera_config_t _config;
      sensor_t *_sensor;
+     camera_sensor_info_t *_infoSensor;
       
    public:
       //ESPCAM();  // Constructor por defecto
@@ -37,11 +39,16 @@ class ESPCAM
 
       // Recogida de datos del sensor
       pixformat_t get_pixformat();
+      const char* get_camara();
+      const bool get_soporta_jpeg();
       framesize_t get_framesize();
       uint8_t get_calidad();   // 0 -63
       int8_t get_brillo();//-2 - 2
       int8_t get_contraste();//-2 - 2
       int8_t get_saturacion();//-2 - 2
+      int8_t get_efectoEspecial();//0 - 6
+      int8_t get_espejoV();   // 0-1
+      int8_t get_espejoH();   // 0-1
       
       //Cambia datos sensor
       void set_framesize(framesize_t);
@@ -49,6 +56,10 @@ class ESPCAM
       void set_brillo(int8_t);
       void set_contraste(int8_t);
       void set_saturacion(int8_t);
+      void set_efectoEspecial(int8_t);
+      void set_espejoV(bool);
+      void set_espejoH(bool);
+      void set_carta(bool);
 };
 
 #endif

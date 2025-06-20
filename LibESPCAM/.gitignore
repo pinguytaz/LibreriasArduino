@@ -3,3 +3,5 @@
 *.odt
 *.xcf
 NoPasar/
+Libro/
+examples/openCV/python/venv

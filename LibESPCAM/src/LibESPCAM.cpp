@@ -9,6 +9,8 @@
  * 
  *  Version 1.0 Mayo 2023
  *  Versión 1.1: Febrero 2025  Se modifica para que funcione con version 3 del API ESP
+ *  Versión 1.2: Mayo 2025     Solución migración a version 3 del Flash
+ *  Versión 2.0: Junuo 2025    Se añaden nuevos metodos para gestion de la camara
  **********************************************************/
 #include "LibESPCAM.h"
 
@@ -49,7 +51,9 @@ ESPCAM::ESPCAM(int calidadjpeg, framesize_t tamano, size_t buffers, camera_grab_
    
    _config.frame_size = tamano;  // Tamaño salida de la imagen QVGA|CIF|VGA|SVGA|XGA|SXGA|UXGA FRAMESIZE_240X240 Para reconocimiento
    _config.jpeg_quality = calidadjpeg; //Calidad 0-63 a menor numero mas calidad
-   _config.fb_count = buffers;  // Numero de imagenes en el frames, mas de 1 funciona en continuo.
+   _config.fb_count = buffers;  // Numero de frames capturador
+                                // Mas de 1 funciona en continuo, ya que mientra se procesa uno la camara puede llenar otro
+                                // Requieren más PSRAM 2 optimizado 
    _config.grab_mode = modo; // Indica como se rellenan lo buffers
                              //CAMERA_GRAB_WHEN_EMPTY llena cuando esta vacio, menos recursos pero se recogen fotogramas antiguos.
                              // CAMERA_GRAB_LATEST  siempre tendremos los ultimos, es decir al llamar a fb_get (interesante para fb_count distinto de uno.
@@ -68,18 +72,15 @@ esp_err_t ESPCAM::iniciaCAM(void)
 
    //Iniciamos el sensor
    _sensor = esp_camera_sensor_get();  //Obtenemos los datos del sensor, que luego se modificaran.
-  
+   _infoSensor = esp_camera_sensor_get_info(&_sensor->id);
 
    // Incializamos Flash
    /*    Codigo de V2 del API de ESP
    ledcSetup(LED_LEDC_CHANNEL, 5000, 8);
    ledcAttachPin(LED_GPIO_NUM, LED_LEDC_CHANNEL);
    */
-   ledcAttachChannel(LED_GPIO_NUM, 5000, 8, LED_LEDC_CHANNEL);
-   //bool ledcAttachChannel(uint8_t pin, uint32_t freq, uint8_t resolution, int8_t channel);
-
-   
-
+   //ledcAttach(LED_GPIO_NUM, 5000, 8);   // Asignación canal automatica
+   ledcAttachChannel(LED_GPIO_NUM, 5000, 8, LED_LEDC_CHANNEL);  // Asignamos nosotros el canal
    Flash(Apagado);  // Inicialmente apagamos el Flash
 
    //Configuramos LED Rojo
@@ -92,7 +93,7 @@ esp_err_t ESPCAM::iniciaCAM(void)
 // Funciones de Flash y Leds
 void ESPCAM::Flash(Nivel_Flash intensidad)
 { 
-   ledcWrite(LED_LEDC_CHANNEL, intensidad);
+   ledcWrite(LED_GPIO_NUM, intensidad);
 }
 void ESPCAM::ledRojo(bool encender)
 {
@@ -121,11 +122,19 @@ Error_ESPCAM ESPCAM::Foto(pf_timagen funcion, void *parametros)
 }
 //==================== Funciones get
 pixformat_t ESPCAM::get_pixformat() { return _sensor->pixformat;}
+const char * ESPCAM::get_camara() {return _infoSensor->name; }
+const bool ESPCAM::get_soporta_jpeg() {return _infoSensor->support_jpeg; }
+
 framesize_t ESPCAM::get_framesize() { return _sensor->status.framesize; }
 uint8_t ESPCAM::get_calidad() { return _sensor->status.quality; }
 int8_t ESPCAM::get_brillo() { return _sensor->status.brightness; }
 int8_t ESPCAM::get_contraste() { return _sensor->status.contrast; }
 int8_t ESPCAM::get_saturacion() { return _sensor->status.saturation; }
+int8_t ESPCAM::get_efectoEspecial() { return _sensor->status.special_effect; }
+int8_t ESPCAM::get_espejoV() { return _sensor->status.vflip; }
+int8_t ESPCAM::get_espejoH() { return _sensor->status.hmirror; }
+
+
 
 //===================  Funciones SET
 void ESPCAM::set_framesize(framesize_t val){ _sensor->set_framesize(_sensor, val); }
@@ -133,3 +142,9 @@ void  ESPCAM::set_calidad(uint8_t val) { _sensor->set_quality(_sensor, val); }
 void ESPCAM::set_brillo(int8_t val) { _sensor->set_brightness(_sensor,val); }
 void ESPCAM::set_contraste(int8_t val) { _sensor->set_contrast(_sensor,val); }
 void ESPCAM::set_saturacion(int8_t val) { _sensor->set_saturation(_sensor,val); }
+void ESPCAM::set_efectoEspecial(int8_t val) { _sensor->set_special_effect(_sensor,val); }
+void ESPCAM::set_espejoV(bool val) { if (val) _sensor->set_vflip(_sensor,1); else _sensor->set_vflip(_sensor,0); }
+void ESPCAM::set_espejoH(bool val) { if (val) _sensor->set_hmirror(_sensor,1); else _sensor->set_hmirror(_sensor,0); }
+void ESPCAM::set_carta(bool val) { if (val) _sensor->set_colorbar(_sensor,1); else _sensor->set_colorbar(_sensor,0);}
+
+

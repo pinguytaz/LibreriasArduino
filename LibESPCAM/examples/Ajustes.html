@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+   <head>
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width,initial-scale=1">
+     <style>
+        body 
+        {
+          font-family: Arial,Helvetica,sans-serif;
+          background: #080858;
+          color: #EFEFEF;
+          font-size: 16px
+        }
+     </style>
+   </head>  
+   <title>Parametros camara ESP32 programa camaraIP</title>
+   <body>
+     <button id="cambiaflash">Flash</button><BR>
+     <button id="cartaajuste">Carta de ajuste</button><BR>
+
+<!--
+     <label for="framesize">Resolution</label>
+     <select id="framesize" class="default-action">
+        <option value="6">QVGA(320x240)</option>
+        <option value="10">VGA(640x480)</option>
+     </select>
+-->
+
+     <label for="quality">Calidad</label> <input id="calidad" type="number" min="0" max="63" size="2" value="10" class="default-action"><BR>
+     <label for="brightness">Brillo</label> <input id="brillo" type="number" min="-2" max="2" size="2" value="0" class="default-action"><BR>
+     <label for="contrast">Contraste</label> <input id="contraste" type="number" min="-2" max="2" size="2" value="0" class="default-action"><BR>
+     <label for="saturation">Saturacion</label> <input id="saturacion" type="number" min="-2" max="2" size="2" value="0" class="default-action">          <BR>
+     <label for="efectoespecial">Efecto especial: </label>
+     <select id="efectoespecial" class="default-action">
+        <option value="0">Sin efecto</option>
+        <option value="1">Negativo</option>
+        <option value="2">Escala de grises</option>
+        <option value="3">Rojo</option>
+        <option value="4">Verde</option>
+        <option value="5">Azul</option>
+        <option value="6">Sepia</option>
+     </select>
+     <BR>
+     <button id="espejov" class="binario">Espejo Vertical (??)</button><BR>
+     <button id="espejoh" class="binario">Espejo Horizontal (??)</button><BR>
+
+<script>
+   //  Variables globales
+   var base = "http://192.168.50.1:8080"
+
+   // Controles a gestiona
+   var botonFlash = document.getElementById('cambiaflash')
+   var cartaajuste = document.getElementById('cartaajuste')
+   //var framesize = document.getElementById('framesize')
+   var calidad = document.getElementById('calidad')
+   var brillo = document.getElementById('brillo')
+   var contraste = document.getElementById('contraste')
+   var saturacion = document.getElementById('saturacion')
+   var efectoespecial = document.getElementById('efectoespecial')
+   var espejov = document.getElementById('espejov')
+   var espejoh = document.getElementById('espejoh')
+
+
+   // Evento que se ejecuta al cargar la pagina
+   document.addEventListener("DOMContentLoaded", function() {
+      const query = base +"/status"
+      fetch(query).then(function (response) 
+      {
+         return response.json()
+      }).then(function (state) 
+      {
+         //alert(JSON.stringify(state))
+         document.querySelectorAll('.default-action').forEach(el => 
+         {
+            //alert(el.id)
+            //alert(state[el.id])
+            el.value = state[el.id]
+         })
+         document.querySelectorAll('.binario').forEach(el => 
+         {
+            if (el.id == "espejov") 
+               if (state[el.id] == 1) espejov.innerHTML = "Espejo Vertical (SI)"
+               else espejov.innerHTML = "Espejo Vertical (NO)"
+            if (el.id == "espejoh") 
+               if (state[el.id] == 1) espejoh.innerHTML = "Espejo Horizontal (SI)"
+               else espejoh.innerHTML = "Espejo Horizontal (NO)"
+         })
+      })
+   });    // Fin definicion evento carga
+
+
+   // Funcionamiento de Boton Flash
+   botonFlash.onclick = () => 
+    {
+       var query = base +"/flash"
+       fetch(query).then(response => 
+       {
+         console.log(`request to ${query} finalizado, status: ${response.status}`)
+       })
+    }
+
+   // Pone o no la carta de ajuste
+   cartaajuste.onclick = () => 
+    {
+       var query = base +"/carta"
+       fetch(query).then(response => 
+       {
+         console.log(`request to ${query} finalizado, status: ${response.status}`)
+       })
+    }
+
+   espejov.onclick = () => 
+    {
+       var query = base +"/espejoV"
+       fetch(query).then(response => 
+       {
+         console.log(`request to ${query} finalizado, status: ${response.status}`)
+       })
+    }
+
+   espejoh.onclick = () => 
+    {
+       var query = base +"/espejoH"
+       fetch(query).then(response => 
+       {
+         console.log(`request to ${query} finalizado, status: ${response.status}`)
+       })
+    }
+
+// Cambios de propiedades
+   calidad.onchange = function()
+   {
+     var valor = calidad.value
+     var query = base +"/control?var=calidad&val="+ valor
+     fetch(query).then(response => 
+     {
+       console.log(`request to ${query} finalizado, status: ${response.status}`)
+     })
+   }
+   brillo.onchange = () => 
+   {
+     var valor = brillo.value
+     var query = base +"/control?var=brillo&val="+ valor
+     fetch(query).then(response => 
+     {
+       console.log(`request to ${query} finalizado, status: ${response.status}`)
+     })
+   }
+   contraste.onchange = () => 
+   {
+     var valor = contraste.value
+     var query = base +"/control?var=contraste&val="+ valor
+     fetch(query).then(response => 
+     {
+       console.log(`request to ${query} finalizado, status: ${response.status}`)
+     })
+   }
+ saturacion.onchange = () => 
+   {
+     var valor = saturacion.value
+     var query = base +"/control?var=saturacion&val="+ valor
+     fetch(query).then(response => 
+     {
+        console.log(`request to ${query} finalizado, status: ${response.status}`)
+     })
+   }
+
+ efectoespecial.onchange = () => 
+   {
+     var valor = efectoespecial.value
+     var query = base +"/control?var=efectoespecial&val="+ valor
+     fetch(query).then(response => 
+     {
+        console.log(`request to ${query} finalizado, status: ${response.status}`)
+     })
+   }
+
+
+/*
+   // Cambio de de resolucion
+   framesize.onchange = () => 
+   {  
+     var query = base +"/control?var=framesize&val="+ framesize.value
+     alert(query)
+     fetch(query).then(response => 
+     {
+       console.log(`request to ${query} finalizado, status: ${response.status}`)
+     })
+   }
+*/
+</script>
+  </body>
+</html>
