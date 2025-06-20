@@ -31,31 +31,31 @@ xxx_saturacion   Saturación -2 - 2
 
 **Métodos LibESPCAM**  
   
-|  Funcion|Descripción                                                                                                                            |
-|-----------------------------------------------------------------|-------------------------------------------------------------------------------|
-| **Void Flash(Nivel_Flash)**                                     | Activa o desactiva el flash al nivel que definamos: Alto, Medio, Bajo, Apagado|
-| **void ledRojo(bool)**                                          | Enciende o apaga el led rojo de la placa.                                     |
-| **Error_ESPCAM Foto(pf_timagen funcion, void *parametros=NULL)**| Realizamos foto y se pasa como parámetro: función a la que se llama, parámetros extras que se pasán a la función.|
-| **pixformat_t get_pixformat()**                                 | Formato de los datos,  sera JPEG ya que se pone fijo en la clase |
-| **char* get_camara()**                                          | Retorna el modelo de la camara                                 |
-| **bool get_soporta_jpeg()**                                     | Indica si soporta o no JPEG                                    |
-| **ramesize_t get_framesize()**                                  | Tamaño de la imagen |
-| **uint8_t get_calidad()**                                       | Calidad de la imagen un número de 0-63, a menor más calidad |
-| **int8_t get_brillo()**                                         | 	Brillo entre -2 y 2 |
-| **int8_t get_contraste()**                                      | Contraste entre -2 y 2 |
-| **int8_t get_saturacion()**                                     | Saturación entre -2 y 2 |
-| **int8_t get_efectoEspecial()**                                 | Efecto especial 0 - 6 |
-| **int8_t get_espejoV()**                                        | Espejo Vertical 0-NO y 1-SI |
-| **int8_t get_espejoH()**                                        | Espejo Horizontal 0-NO y 1-SI |
-| **void set_framesize(framesize_t)**                             | Configura el tamaño de la imagen |
-| **void set_calidad(uint8_t)**                                   | Configura la calidad de la imagen |
-| **void set_brillo(int8_t)**                                     | Configura el brillo |
-| **void set_contraste(int8_t)**                                  | Configura el contraste |
-| **void set_saturacion(int8_t)**                                 | Configura la saturación |
-| **void set_carta(bool)**                                        | Pone o quita la carta de ajuste de la cámara. |
-| **set_espejoV(bool)**                                           | Realiza o no el espejo Vertical |
-| **set_espejoH(bool)**                                           | Realiza o no el espejo Horizontal |
-| **set_efectoEspecial(int8_t)**                                  | 0 – Sin efecto 1 – Negativo 2 – Escala de grises 3 – Rojo 4 – verde 5 – Azul 6 – Sepia |  
+|  Funcion|Descripción                                                                                                              |
+|---------------------------------------------------|-------------------------------------------------------------------------------|
+| **Flash(Nivel_Flash)**                            | Activa o desactiva el flash al nivel que definamos: Alto, Medio, Bajo, Apagado|
+| **ledRojo(bool)**                                 | Enciende o apaga el led rojo de la placa.                                     |
+| **Foto(pf_timagen funcion, void parametros=NULL)**| Realizamos foto y se pasa como parámetro: función a la que se llama, parámetros extras que se pasán a la función.|
+| **pixformat_t get_pixformat()**                   | Formato de los datos,  sera JPEG ya que se pone fijo en la clase |
+| **get_camara()**                                  | Retorna el modelo de la camara                                 |
+| **get_soporta_jpeg()**                            | Indica si soporta o no JPEG                                    |
+| **get_framesize()**                               | Tamaño de la imagen |
+| **get_calidad()**                                 | Calidad de la imagen un número de 0-63, a menor más calidad |
+| **get_brillo()**                                  | 	Brillo entre -2 y 2 |
+| **get_contraste()**                               | Contraste entre -2 y 2 |
+| **get_saturacion()**                              | Saturación entre -2 y 2 |
+| **get_efectoEspecial()**                          | Efecto especial 0 - 6 |
+| **get_espejoV()**                                 | Espejo Vertical 0-NO y 1-SI |
+| **get_espejoH()**                                 | Espejo Horizontal 0-NO y 1-SI |
+| **set_framesize(framesize_t)**                    | Configura el tamaño de la imagen |
+| **set_calidad(uint8_t)**                          | Configura la calidad de la imagen |
+| **set_brillo(int8_t)**                            | Configura el brillo |
+| **set_contraste(int8_t)**                         | Configura el contraste |
+| **set_saturacion(int8_t)**                        | Configura la saturación |
+| **set_carta(bool)**                               | Pone o quita la carta de ajuste de la cámara. |
+| **set_espejoV(bool)**                             | Realiza o no el espejo Vertical |
+| **set_espejoH(bool)**                             | Realiza o no el espejo Horizontal |
+| **set_efectoEspecial(int8_t)**                    | 0 – Sin efecto 1 – Negativo 2 – Escala de grises 3 – Rojo 4 – verde 5 – Azul 6 – Sepia |  
   
 <BR>  
 Tenemos varios ejemplos de su uso:  
