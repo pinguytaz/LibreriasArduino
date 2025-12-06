@@ -1,6 +1,5 @@
-# LibR200 (Libreria clase gestion lector R200)  ![Logo](LogoLibR200_Peque.jpg)  [![license](https://www.pinguytaz.net/IMG_GITHUB/gplv3-with-text-84x42.png)](https://github.com/pinguytaz/Arduino-ESP32/LICENSE)
-
-
+# LibR200 (Libreria clase gestion lector R200) ![Logo](LogoLibR200_Peque.jpg) [![license](https://www.pinguytaz.net/IMG_GITHUB/gplv3-with-text-84x42.png)](https://github.com/pinguytaz/Arduino-ESP32/LICENSE)  
+  
 __Libreria LibR200__
 Probada con el lector M100 26dBm V1.0 (UHF EPC C1G2/ISO 18000-6C, 840–960 MHz) V.Software: V2.3.5 Fabricante: MagicRf
   
