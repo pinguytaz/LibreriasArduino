@@ -11,6 +11,8 @@
   - **[Libreria ESPCAM](LibESPCAM)**  
       Libreria para la gestion y programación de la placas con camaras de ESP32, en este momento se ha realizado para AI-Thinker con la camara OV264.  
   
+- **[Libreria R200](LibR200)**  
+      Libreria para usar el lector RFID-UHF R200, probado con el modelo "M100 26dBm V. Software 2.3.5"·  
   
 <br><br>
 

@@ -21,9 +21,11 @@ import cv2
 def main(argv):
         # Definir la URL donde emite la camara.
 	url='http://192.168.50.1:8081/stream'
-	#cap = cv2.VideoCapture(url,cv2.CAP_ANY) # Crear objeto para capturar video
 	cap = cv2.VideoCapture(url,cv2.CAP_ANY) # Crear objeto para capturar video
-	cap.open(url,cv2.CAP_ANY) # Crear objeto para capturar video
+	#cap = cv2.VideoCapture(0) # Crear objeto para capturar video en este caso camara 0
+
+	#cap=cv2.VideoCapture()
+	#cap.open(url,cv2.CAP_ANY) # Crear objeto para capturar video
 
 	print(cap.getBackendName())
 	print(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -34,6 +36,7 @@ def main(argv):
 
 	while cap.isOpened():
 		ret, frame = cap.read()
+		print(type(frame))
 		if not ret:
 			print("Error en frame, reintentando...")
 			break
