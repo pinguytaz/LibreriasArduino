@@ -1,4 +1,4 @@
-# LibR200 (Libreria clase gestion lector R200)
+# LibR200 (Libreria clase gestion lector R200)  ![Logo](LogoLibR200_Peque.jpg)  
 [![license](https://www.pinguytaz.net/IMG_GITHUB/gplv3-with-text-84x42.png)](https://github.com/pinguytaz/Arduino-ESP32/blob/master/LICENSE)
 
 
