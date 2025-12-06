@@ -35,21 +35,21 @@ y despues inicializarla "Lector.iniciaR200()"
   
 |  Funcion|Descripción                                                                                                              |
 |---------------------------------------------------|-------------------------------------------------------------------------------|
-|**R200(HardwareSerial*, int baud = 115200, uint8_t RxPin = 16, uint8_t TxPin = 17)**    |    Constructor  |  
+|***R200(HardwareSerial*, int baud = 115200, uint8_t RxPin = 16, uint8_t TxPin = 17)**   | Constructor    |
 |**bool iniciaR200()**  |   Inicializa la clase  |  
 |**t_CodError get_Error()**  | Nos da el codigo del ultimo error producido   |  
-|**bool hw_info(t_Hardware*)** |   Información de la placa|  
+|***bool hw_info(t_Hardware*)** |   Información de la placa|  
 |**t_Region get_Region(void)  bool set_Region(t_Region)** |   Obtiene y programa la región de uso |  
 |**float get_Canal(void) bool set_Canal(uint8_t)** |  obtiene y pone canal  |  
 |**int get_Potencia(void) bool set_Potencia(int)**   | Obtiene y define la potencia |  
 |**t_Firmware get_Firmware(void)  bool set_Firmware(t_Sel, t_Session, t_Target, uint8_t)** | configuración y obtención de parametros de firmware |  
 |**t_Demodulador get_Demodulador(void)  bool set_Demodulador(t_Demodulador)**  |  Define y obtiene configuración del demodulador  |  
 |**bool hopping(bool)**  | Activa o desactiva hopping   |  
-|**bool insertCanales(uint8_t , uint8_t*)**   |   Inserta canales de hopping |  
+|***bool insertCanales(uint8_t , uint8_t*)** |   Inserta canales de hopping |  
 |**bool transmisionContinua(bool)**  |  Activa o desactiva la transmisión continua |  
-|**int simplePool(t_Tag* , int )**  | Lectura simple de los TAGs a su alcance  |  
-|**bool leeTAG(uint8_t*, t_BankMemory , unsigned int, unsigned int, t_DatosTag*)** |  Lee datos de un TAG |  
-|**bool escribeTAG(uint8_t*, t_BankMemory , unsigned int, unsigned int, uint8_t*, t_DatosTag*)**   |  Escribe un TAG |  
+|**int simplePool(t_Tag * , int )**  | Lectura simple de los TAGs a su alcance  |  
+|**bool leeTAG(uint8_t *, t_BankMemory , unsigned int, unsigned int, t_DatosTag*)** |  Lee datos de un TAG |  
+|***bool escribeTAG(uint8_t *, t_BankMemory , unsigned int, unsigned int, uint8_t*, t_DatosTag*)**   |  Escribe un TAG |  
 
 <BR>  
 Tenemos varios ejemplos de su uso:  
