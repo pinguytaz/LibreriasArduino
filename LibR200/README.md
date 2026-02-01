@@ -56,7 +56,8 @@ Tenemos varios ejemplos de su uso:
 - **VerificaLector** Nos da el firmware y datos configurados  
 - **LecturaTAG** Lectura de un TAG  
 - **EscrituraTAG** Escribe datos en un TAG.  
-- **BuscaEtiqueta** Localizas etiquetas en el ambito.  
+- **BuscaEtiqueta** Localizas etiquetas en el ambito.
+- **Select** Realización de filtros para la localización de etiquetas.  
 
   
 <BR>  
