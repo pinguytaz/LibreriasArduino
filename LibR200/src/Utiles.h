@@ -48,14 +48,6 @@ void impErrores(uint8_t error)
   }
 }
 
-
-/*void printHexByte(uint8_t value)
-{
-  Serial.print(value < 0x10 ? "0x0" : "0x");
-  Serial.print(value, HEX);
-  Serial.print(" ");
-}*/
-
 void printHexBytes(uint8_t *value, uint16_t len)
 {
   for(int i=0; i<len; i++){

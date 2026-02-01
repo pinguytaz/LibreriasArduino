@@ -29,7 +29,11 @@ bool R200::iniciaR200()
 
 t_CodError R200::get_Error() { return _error; }
 
-/******************* Obtienen informacion del modulo */
+/******************* 
+  0x03  hw_info(t_Hardware *): Obtencion de información del modulo.
+          t_Hardware   Estructura que devolvera la información del modulo
+          retorna true si todo correcto
+**********************/
 bool R200::hw_info(t_Hardware *informacion)
 {
   _commandFrame[0] = R200_FrameCabecera;
@@ -76,7 +80,11 @@ bool R200::hw_info(t_Hardware *informacion)
   return true;
 }
 
-/******************* Actualiza y obtiene la region */
+/******************* 
+  0x07  set_Region(t_Region): Ponemos Region.
+          t_Region Valores de region
+          retorna true si todo correcto.
+**********************/
 bool R200::set_Region(t_Region region)
 {
   _commandFrame[0] = R200_FrameCabecera;
@@ -91,9 +99,12 @@ bool R200::set_Region(t_Region region)
   if(enviaComando(_commandFrame, 8) > 0)  
   return true;
 }
+/******************* 
+  0x08  t_Region get_Region(void): Nos da la región configurada.
+          Retorna el valor de la region.
+**********************/
 t_Region R200::get_Region(void)
 {
-  
   _commandFrame[0] = R200_FrameCabecera;
   _commandFrame[1] = R200_TipoComando;
   _commandFrame[2] = 0x08;   // Comando solicitud Region 0x08
@@ -109,7 +120,11 @@ t_Region R200::get_Region(void)
   return Desconocido;
 }
 
-/******************* Actualiza y obtiene  Canal*/
+/******************* 
+  0xAB  set_Canal(uint8): Ponemos el canal.
+          uint8 el canal a configurar
+          retorna true si todo correcto.
+**********************/
 bool R200::set_Canal(uint8_t canal)
 {
   _commandFrame[0] = R200_FrameCabecera;
@@ -124,6 +139,10 @@ bool R200::set_Canal(uint8_t canal)
   if(enviaComando(_commandFrame, 8) > 0)  return true;
   else return false;
 }
+/******************* 
+  0xAA  get_Canal(void): obtiene el canal.
+          retorna un flotante con el canal convertido a frecuencia
+**********************/
 float R200::get_Canal(void)
 {
   float frecuencia = 0;
@@ -165,9 +184,11 @@ float R200::get_Canal(void)
   return frecuencia;
 }
 
-/**************** 
-           Actualiza y pone la potencia   
-*/
+/******************* 
+  0xB6  set_Potencia(int): Ponemos la potencia.
+          int Potencia en Db
+          retorna true si todo correcto
+**********************/
 bool R200::set_Potencia(int potencia)
 {
   _commandFrame[0] = R200_FrameCabecera;
@@ -186,9 +207,12 @@ bool R200::set_Potencia(int potencia)
   if(enviaComando(_commandFrame, 9) > 0)  return true;
   else return false;
 }
+/******************* 
+  0xB7  get_Potencia(void): Obtenemos la potencia configurada
+          retorna un entero con la potencia configurada
+**********************/
 int R200::get_Potencia(void)
 {
-   
   _commandFrame[0] = R200_FrameCabecera;
   _commandFrame[1] = R200_TipoComando;
   _commandFrame[2] = 0xB7;   // Comando obtener potencia 0xB7
@@ -204,9 +228,10 @@ int R200::get_Potencia(void)
   return 0;
 }
 
-/**************** 
-          Pone y actualiza fimware   
-*/
+/******************* 
+  0x0D  get_Firmware(void): Obtenemos la configuración del Firmware
+          retorna una estructura t_Firmware con la configuración
+**********************/
 t_Firmware R200::get_Firmware(void)
 {
   t_Firmware retorno;
@@ -226,6 +251,14 @@ t_Firmware R200::get_Firmware(void)
   return retorno;
 }
 
+/******************* 
+  0x0E  set_Firmware(t_Sel, t_Session, t_Target, uint8_t Q ): Ponemos parametros del Firmware
+          t_Sel banco de población logica
+          t_Session control anticolisión
+          t_Target objetivo a barrer
+          uint8_t algoritmo anticolisión Q.
+          retorna true si todo correcto.
+**********************/
 bool R200::set_Firmware(t_Sel Sel, t_Session Session, t_Target Target, uint8_t Q )
 {
   t_Firmware retorno;
@@ -256,9 +289,11 @@ bool R200::set_Firmware(t_Sel Sel, t_Session Session, t_Target Target, uint8_t Q
   return false;
 }
 
-/* 
-       Insertamos canales para hopping
-*/
+/******************* 
+  0xA9  insertCanales(uint8_t, uint8_t*): Insertamos canales para hopping
+          uint8_t Numero de canales a insertar
+          uint8_t* array con los canales a inseertar.
+**********************/
 bool R200::insertCanales(uint8_t nCanales, uint8_t *canales)
 {
   int pos =0;
@@ -296,9 +331,10 @@ bool R200::insertCanales(uint8_t nCanales, uint8_t *canales)
   else return false;
 }
 
-/*
-     Activa o desactiba el modo hopping de frecuencia automatica
-*/
+/******************* 
+  0xAD  hopping(bool): Activa o desactiva hopping.
+          bool activa o desactiva
+**********************/
 bool R200::hopping(bool poner)
 {
   _commandFrame[0] = R200_FrameCabecera;
@@ -317,9 +353,10 @@ bool R200::hopping(bool poner)
   return true;
 }
 
-/*
-        Pone transmision continua o no, se aconseja no y solo si para mediciones de antena
-*/
+/******************* 
+  0xB0  transmisionContinua(bool continua): Activa o desactiva la transmisión continua, consejo es no y solo si para mediciones antenas
+          bool activa o desactiva
+**********************/
 bool R200::transmisionContinua(bool continua)
 {
   _commandFrame[0] = R200_FrameCabecera;
@@ -338,9 +375,11 @@ bool R200::transmisionContinua(bool continua)
   return true;
 }
 
-/************
-     Leemos y ponemos parametros del modulador
-*/
+/******************* 
+  0xF0  set_Demodulador(t_Demodulador): Ponemos datos del modulador
+          t_Demodulador estructura con los datos del modulador
+          retorna true si todo correcto.
+**********************/
 bool R200::set_Demodulador(t_Demodulador parametros)
 {
   _commandFrame[0] = R200_FrameCabecera;
@@ -360,6 +399,10 @@ bool R200::set_Demodulador(t_Demodulador parametros)
   if(enviaComando(_commandFrame, 11) > 0)  return true;
   else return false;
 }
+/******************* 
+  0xF1  get_Demodulador(void): Obtiene datos del modulador
+          Retorna t_Demodulador estructura con los datos del modulador
+**********************/
 t_Demodulador R200::get_Demodulador(void)
 {
   t_Demodulador retorno;
@@ -385,10 +428,11 @@ t_Demodulador R200::get_Demodulador(void)
   return retorno;
 }
 
-/*
-    Solicita un simple Pool para localizar etiquetas   
-    Se devolvera un array con los datos de las encontradas, y se define el maximo de etiquetas a leer
-*/
+/******************* 
+  0x22  simplePool(t_Tag*, int): Realiza un simple pool que detecta los TAG que estan en el RANGO
+          t_Tag*  Array con las etiquetas localizadas.
+          int     Numero máximo de etiquetas a leer
+**********************/
 int R200::simplePool(t_Tag *etiquetas, int maxEtiquetas)
 {
   int etiquetasLeidas = 0;
@@ -402,7 +446,6 @@ int R200::simplePool(t_Tag *etiquetas, int maxEtiquetas)
   _commandFrame[5] = crc(_commandFrame,5);
   _commandFrame[6] = R200_FrameFinal;
 
-  Serial.println("Se ha realizado el Pool");
   bytesRecibidos = enviaComando(_commandFrame, 7);
   if (bytesRecibidos > 0)
   {
@@ -582,10 +625,118 @@ bool R200::escribeTAG(uint8_t *clave, t_BankMemory  bancoMemory, unsigned int de
   return false;
 }
 
+/******************* 
+  0x0C  setSelect(t_Parametros): Establece parámetros Select, antes de realizar lecturas, escrituras o bloqueos
+          t_Parametros Parametros
+**********************/
+bool R200::setSelect(t_Objetivo objetivo, t_Accion accion, t_BankMemory banco, uint32_t inicioEnBits, uint8_t *mascara, unsigned int longitud, 
+                    t_Truncate truncate)
+{
+  //int etiquetasLeidas = 0;
+  uint8_t bytesRecibidos;
+  _commandFrame[0] = R200_FrameCabecera;
+  _commandFrame[1] = R200_TipoComando;
+  _commandFrame[2] = 0x0C;   // Comando para realizar un Pool, para ver etiquetas al alcance
+  union 
+  {
+    unsigned int ui;
+    uint8_t bytes[2];
+  } eldato;
+  eldato.ui = longitud + 7;
+  _commandFrame[3] = eldato.bytes[1]; // Longitud del parametro y depende de la longitud de la mascara
+  _commandFrame[4] = eldato.bytes[0];
+  union {
+        uint8_t selParam;  // Byte completo de Sel Param Target(3)Action(3)BancoMemoria(2)
+        struct {
+            uint8_t mem_bank : 2;  // Bits 1-0: MemBank (00-RFU 01-EPC 10-TID 11-User)
+            uint8_t action   : 3;  // Acciones sobre el tag 000-Match(incluir) 001-NoMatch(no incluir) 010-Reservado
+            t_Objetivo target   : 3;  // Inventario objetivo 000-S0 001-S1 010-S2 011-S3 100-SL 101-RFU 101-RFU 111-RFU
+        } campo;
+    } sel;
+  sel.campo.target = objetivo;
+  sel.campo.action = accion;
+  sel.campo.mem_bank = banco;
+  _commandFrame[5] = sel.selParam;
+  union 
+  {
+    uint32_t valor;
+    uint8_t bytes[4];
+  } dWord;
+  dWord.valor = inicioEnBits;
+  _commandFrame[6]= dWord.bytes[3];
+  _commandFrame[7]= dWord.bytes[2];
+  _commandFrame[8]= dWord.bytes[1];
+  _commandFrame[9]= dWord.bytes[0];
+  _commandFrame[10]=  longitud * 8; // Se pone en bits
+  _commandFrame[11]=  truncate ;
 
+  for(int pos=0; pos<longitud; pos++) _commandFrame[pos+12] = mascara[pos];
+  _commandFrame[12+longitud] = crc(_commandFrame,12+longitud);
+  _commandFrame[13+longitud] = R200_FrameFinal;
 
-// ************************************************* Privadas
-/*************  Calcula el checksum de una trama */
+  Serial.println("Lanzamos comando ");
+  bytesRecibidos = enviaComando(_commandFrame, 14+longitud);
+  //if (bytesRecibidos > 0)
+  
+  return true;
+}
+/******************* 
+  0x0B  getSelect(): Recoge parametros de Select.
+          Retorna t_Parametros con los parametros de select configurados.
+**********************/
+t_Parametros R200::getSelect(void)
+{
+  t_Parametros retorno;
+  _commandFrame[0] = R200_FrameCabecera;
+  _commandFrame[1] = R200_TipoComando;
+  _commandFrame[2] = 0x0B;   // Comando 
+  _commandFrame[3] = 0x00; // ParamLen MSB
+  _commandFrame[4] = 0x00; // ParamLen LSB 
+  _commandFrame[5] = crc(_commandFrame,5);
+  _commandFrame[6] = R200_FrameFinal;
+
+  if(enviaComando(_commandFrame, 7)> 0)  
+  {
+    retorno.sel.selParam = _buffer[5];
+    retorno.ptr[0] = _buffer[6];
+    retorno.ptr[1] = _buffer[7];
+    retorno.ptr[2] = _buffer[8];
+    retorno.ptr[3] = _buffer[9];
+    retorno.MaskLen = _buffer[10];
+    retorno.Truncate = _buffer[11];
+    for (int pos = 0; pos < retorno.MaskLen/8; pos++) retorno.Mask[pos]= _buffer[pos+12];; 
+  }
+  return retorno;
+}
+/******************* 
+  0x12  modoSelect(uint8_t): Ponemos el modo Select.
+          uint8_t modo del select: 0x00 siempre select, 0x01 se cancela select 
+          y 0x02(se pone al definir select) no envio en pooling si en lecturas o escrituras.
+          Retorna true si todo correcto
+**********************/
+bool R200::modoSelect(uint8_t modo)
+{
+  t_Parametros retorno;
+  _commandFrame[0] = R200_FrameCabecera;
+  _commandFrame[1] = R200_TipoComando;
+  _commandFrame[2] = 0x12;   // Comando 
+  _commandFrame[3] = 0x00; // ParamLen MSB
+  _commandFrame[4] = 0x01; // ParamLen LSB 
+  _commandFrame[5] = modo;
+  _commandFrame[6] = crc(_commandFrame,6);
+  _commandFrame[7] = R200_FrameFinal;
+
+  enviaComando(_commandFrame, 8);
+  return true;
+}
+
+/********************************************* Privadas ********************************************************************/
+/*************
+  crc(uint8_t*, uint16_t ):  Calcula el checksum de una trama 
+      uint8_t* array con la trama
+      uint16_t posición desde donde empieza a calcular el CRC
+      retorna uint8_t con el CRC
+******************/
 uint8_t R200::crc(uint8_t *frame, uint16_t poscrc)
 {
   uint16_t check = 0;
@@ -597,15 +748,19 @@ uint8_t R200::crc(uint8_t *frame, uint16_t poscrc)
   return (check & 0xff);
 }
   
-/*
-    Envia comando y recibe respuesta, retornando la longitud de la respuesta 0(error) y actualizando var _buffer y _err 
-*/
+/*************
+  enviaComando(uint8_t*, uint16_t): envia una trama con el comando y retorna la longitud de la respuesta.
+                                    Se actualiza _err con el error (retorno 0) y _buffer con los datos de retorno.
+      uint8_t* Trama a enviar
+      uint16_t longitud de la trama
+      retorna uint8_t longitud de los datos retornados.
+******************/
 int R200::enviaComando(uint8_t* frame, uint16_t longitud)
 {
   limpiaBuffer();  // Limpia antes de enviar comando
   _error = ERR_NINGUNO;  // Inicialmente sin error
 
-  //debugFrame('>', frame, longitud); // Visible la trama a envias
+  // debugFrame('>', frame, longitud); // Visible la trama a envias
   _serial->write(frame, longitud);  // Envia la trama al dispositivo
   delay(500);  // Pequeña espera para que le de tiempo a dar respuesta
 
@@ -634,7 +789,7 @@ int R200::enviaComando(uint8_t* frame, uint16_t longitud)
   }
 
   // Verificamos si la trama es correcta o si es una respuesta de error
-  //debugFrame('<', _buffer, bytesRecibidos); // Visible la trama a envias
+  // debugFrame('<', _buffer, bytesRecibidos); // Visible la trama a envias
   if (bytesRecibidos > 1 && _buffer[0] == R200_FrameCabecera && _buffer[bytesRecibidos - 1] == R200_FrameFinal) // Trama Correta
   { 
     if (_buffer[1]==R200_TipoRespuesta && _buffer[2] == CMD_ERROR)   // La respuesta es un error que esta en [5]
@@ -649,10 +804,10 @@ int R200::enviaComando(uint8_t* frame, uint16_t longitud)
   return 0;
 }
 
-/*
-    Limpieza del buffer del puerto serie  
-*/
-void R200::limpiaBuffer()
+/**************************
+  limpiaBuffer(void): Limpia el buffer del puerto serie.
+******************/
+void R200::limpiaBuffer(void)
 {
   while(_serial->available()) { _serial->read(); }
 }

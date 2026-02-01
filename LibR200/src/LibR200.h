@@ -25,7 +25,7 @@ class R200
 
       uint8_t crc(uint8_t*,uint16_t);
       int enviaComando(uint8_t*, uint16_t);
-      void limpiaBuffer();
+      void limpiaBuffer(void);
 
    public:
       R200(HardwareSerial*, int baud = 115200, uint8_t RxPin = 16, uint8_t TxPin = 17);
@@ -48,10 +48,10 @@ class R200
       bool set_Demodulador(t_Demodulador);
 
       int simplePool(t_Tag* , int );
+      bool setSelect(t_Objetivo, t_Accion, t_BankMemory, uint32_t, uint8_t*, unsigned int, t_Truncate);
+      t_Parametros getSelect(void);
+      bool modoSelect(uint8_t);
       bool leeTAG(uint8_t*, t_BankMemory , unsigned int, unsigned int, t_DatosTag*);
       bool escribeTAG(uint8_t*, t_BankMemory , unsigned int, unsigned int, uint8_t*, t_DatosTag*);
-      
-      //t_Parametros get_Parametros(void);
-      //bool set_Parametros(t_Parametros);
 };
 #endif

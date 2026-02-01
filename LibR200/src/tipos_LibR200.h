@@ -82,12 +82,20 @@ typedef struct
   uint8_t CRC_lsb;
 } t_Tag;
 
-enum t_BankMemory 
+/*enum t_BankMemory 
 {
     BANK_RFU = 0x00,      // Reservada
     BANK_EPC = 0x01,
     BANK_TID = 0x02,
     BANK_User = 0x03,
+};*/
+
+enum t_BankMemory 
+{
+    BANK_RFU = 0b000,      
+    BANK_EPC = 0b001,
+    BANK_TID = 0b010,
+    BANK_User = 0b011,
 };
 
 typedef struct
@@ -100,23 +108,50 @@ typedef struct
   uint8_t* Datos;
 } t_DatosTag;
 
+enum t_Objetivo 
+{
+  obS0 = 0b000,
+  obS1 = 0b001,
+  obS2 = 0b010,
+  obS3 = 0b011,
+  obSL = 0b100,
+  obRFU = 0b101,
+  obRFU2 = 0b110,
+  obRFU3 = 0b111,
+} ;
+
+enum t_Accion 
+{
+  Incluir = 0b000,
+  NoIncluir = 0b001,
+} ;
+
+enum t_Truncate
+{
+  NoTrunca = 0x00,
+  Trunca = 0x80,
+} ;
+
 typedef struct {
     union {
         uint8_t selParam;  // Byte completo de Sel Param Target(3)Action(3)BancoMemoria(2)
         struct {
-            uint8_t target   : 3;  // Inventario objetivo 000-S0 001-S1 010-S2 011-S3 100-SL 101-RFU 101-RFU 111-RFU
-            uint8_t action   : 3;  // Acciones sobre el tag 000-Match(incluir) 001-NoMatch(no incluir) 010-Reservado
-            uint8_t mem_bank : 2;  // Bits 1-0: MemBank (00-RFU 01-EPC 10-TID 11-User)
-        } fields;
+            uint8_t mem_bank  : 2;  // Bits 1-0: MemBank (00-RFU 01-EPC 10-TID 11-User)
+            uint8_t action    : 3;  // Acciones sobre el tag 000-Match(incluir) 001-NoMatch(no incluir) 010-Reservado
+            t_Objetivo target : 3;  // Inventario objetivo 000-S0 001-S1 010-S2 011-S3 100-SL 101-RFU 101-RFU 111-RFU
+        } campo;
     } sel;
-    uint32_t ptr;          
+    uint32_t ptr[4];          
     uint8_t MaskLen;      // Longitud máscara en bits  asi 30 son 96 bits que seran 12 bytes
     uint8_t Truncate;      // 0x00 deshabilitada, 0x80 habilita
     uint8_t Mask[32];      // Máscara 32 es la mascara más grande que puede haber 256 bits
 } t_Parametros;
 
-/* Codigos de Mixer Gain. Es la relación en dB entre la potencia de salida en frecuencia intermedia (IF) y la potencia de entrada 
-   El valor típico puede variar entre -5 dB a +6 dB.
+
+/* Codigos de Mixer Gain. Ajusta cuanto amplifica la señal RF antes de pasar a la FI
+   1-5 Muy bajo pueden perderse etiquetas lejanas y mal orientadas
+   12-15 Muy alto puede saturar con etiquetas muy cercanas 
+   MG_9 
 */
 enum t_mixerGain 
 {
@@ -131,6 +166,7 @@ enum t_mixerGain
 
 /* Codigos IF_G (ganancia del amplificador de frecuencia intermedia) mide cuántos decibelios amplifica la señal en la etapa IF. 
    Valores típicos  12 dB hasta 40 dB. Se usa para aumentar la señal antes de su procesamiento digital.
+   IFG_36 con MG_9
 */
 enum t_IFAMP
 {
@@ -143,6 +179,11 @@ enum t_IFAMP
   IFG_36 = 0x06,
   IFG_40 = 0x07,
 };
+/* Thrd  umbral de decisión digital "Threshold" para decidir si un bit es un 0 o 1 en la señal demodulada.
+	0x01B0=432 Alto y hace al lector exigente
+	0x100=256  bajo hace que el lector escuche mejor las etiquetas de señal debil (OJO posibles falsas lectras)
+	 0x0180 o 0x01A0 bien para MG_9 y IFG_36
+*/
 
 // Estructura datos demodulador
 typedef union

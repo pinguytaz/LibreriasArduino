@@ -13,15 +13,15 @@ Usted ACEPTA USARLO BAJO SU PROPIO RIESGO.
 ##Comandos pendientes de implementar
    Algunos comandos no se han implementado, por no encontrarles todavia uso interesante, así la clase ocupa menos memoria, y por su peligrosidad y poco uso.  
    De todas formas la implementación de nuevos comandos es sencilla con las base de la clase creada.  
-  
-- Multipolling 0x27 y 0x28 ya que con el simple pooling lo podemos realizar nosotros y asi ocupamos menos memoria en la clase.  
+
+**No incorporados**  
+- Multipolling 0x27 y Stop 0x28 ya que con el simple pooling lo podemos realizar nosotros, controlando tiempo de lenctura y asi ocupamos menos memoria en la clase.  
 - Look Almacenamiento 0x82 y Kill Tag 0x65. Por su peligrosidad en especial Kill que las deja fuera de uso y solo seria interesante en programa producción de por ejemplo un comercio.  
-- Parametros de selección 0x0C, 0x0B y 0x12
-- Control IO 0x 1A  
-- Sleep 0x17 y 0x1D  
-- Propios de NXP e impinj  
-  
-  
+- Propios de NXP e impinj.  
+- 0x17(Sleep) y 0x1D(Idle Sleep tiempo inactividad)  
+- 0x1A Control de puerto de E/S  (4 puertos)  
+- 0xF2 y 0xF3 Para pruebas de RF  
+<BR>
 ##Uso de LibR200
 Libreria que  facilita la programación del lector "R200", lo primero que deberemos de hacer es crear la clase 
 R200 Lector(&Puerto);  
@@ -36,16 +36,19 @@ y despues inicializarla "Lector.iniciaR200()"
 |***R200(HardwareSerial*, int baud = 115200, uint8_t RxPin = 16, uint8_t TxPin = 17)**   | Constructor    |
 |**bool iniciaR200()**  |   Inicializa la clase  |  
 |**t_CodError get_Error()**  | Nos da el codigo del ultimo error producido   |  
-|***bool hw_info(t_Hardware*)** |   Información de la placa|  
-|**t_Region get_Region(void)  bool set_Region(t_Region)** |   Obtiene y programa la región de uso |  
-|**float get_Canal(void) bool set_Canal(uint8_t)** |  obtiene y pone canal  |  
-|**int get_Potencia(void) bool set_Potencia(int)**   | Obtiene y define la potencia |  
-|**t_Firmware get_Firmware(void)  bool set_Firmware(t_Sel, t_Session, t_Target, uint8_t)** | configuración y obtención de parametros de firmware |  
-|**t_Demodulador get_Demodulador(void)  bool set_Demodulador(t_Demodulador)**  |  Define y obtiene configuración del demodulador  |  
-|**bool hopping(bool)**  | Activa o desactiva hopping   |  
-|***bool insertCanales(uint8_t , uint8_t*)** |   Inserta canales de hopping |  
-|**bool transmisionContinua(bool)**  |  Activa o desactiva la transmisión continua |  
-|**int simplePool(t_Tag * , int )**  | Lectura simple de los TAGs a su alcance  |  
+|**bool hw_info(t_Hardware*)** |0x03: Información de la placa|  
+|**t_Region get_Region(void)  bool set_Region(t_Region)** |0x08 0x07: Obtiene y programa la región de uso |  
+|**float get_Canal(void) bool set_Canal(uint8_t)** |0xAA 0xAB: obtiene y pone canal  |  
+|**int get_Potencia(void) bool set_Potencia(int)**   |0xB7 0xB6: Obtiene y define la potencia |  
+|**t_Firmware get_Firmware(void)  bool set_Firmware(t_Sel, t_Session, t_Target, uint8_t)** |0x0D 0x0E: configuración y obtención de parametros de firmware |  
+|**t_Demodulador get_Demodulador(void)  bool set_Demodulador(t_Demodulador)**  |0xF1 0xF0: Define y obtiene configuración del demodulador  |  
+|**bool hopping(bool)**  |0xAD: Activa o desactiva hopping   |  
+|***bool insertCanales(uint8_t , uint8_t*)** |0xA9: Inserta canales de hopping |  
+|**bool transmisionContinua(bool)**  |0xB0: Activa o desactiva la transmisión continua |  
+|**int simplePool(t_Tag * , int )**  |0x22: Lectura simple de los TAGs a su alcance  |  
+|**bool setSelect(t_Objetivo, t_Accion, t_BankMemory, uint32_t, uint8_t*, unsigned int, t_Truncate)**  |0x0C: Pone parámetros de Select |  
+|**t_Parametros getSelect(void)**  |0x0B: Obtiene parámetros de Select |  
+|**bool modoSelect(uint8_t)**  |0x12: pone modeo  Select (0x00 envia select antes de cualquier operación, 0x01 No envia CANCEL, 0x02 Envio pero no para pooling) |  
 |**bool leeTAG(uint8_t *, t_BankMemory , unsigned int, unsigned int, t_DatosTag*)** |  Lee datos de un TAG |  
 |***bool escribeTAG(uint8_t *, t_BankMemory , unsigned int, unsigned int, uint8_t*, t_DatosTag*)**   |  Escribe un TAG |  
 
