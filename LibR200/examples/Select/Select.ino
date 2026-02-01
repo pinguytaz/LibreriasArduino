@@ -28,7 +28,7 @@ void setup()
   //Lector.set_Firmware(ALL,S0,A,4);  
   
   uint8_t mask[]={'G','a','r','u','m','3',0x00};
-  Lector.setSelect(obS0, Incluir, BANK_EPC, 32, mask, 6, NoTrunca);
+  Lector.setSelect(obSL, Coincide, BANK_EPC, 32, mask, 6, NoTrunca);
 
   t_Parametros parametros;
   parametros = Lector.getSelect();

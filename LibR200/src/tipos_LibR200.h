@@ -40,7 +40,7 @@ enum t_Sel
   SL = 0b11,
   
 } ;
-enum t_Session 
+enum t_Session // Sesiones etiquetas en la que trabaja
 {
   S0 = 0b00,
   S1 = 0b01,
@@ -92,10 +92,10 @@ typedef struct
 
 enum t_BankMemory 
 {
-    BANK_RFU = 0b000,      
-    BANK_EPC = 0b001,
-    BANK_TID = 0b010,
-    BANK_User = 0b011,
+    BANK_RFU = 0b000,    // Reservado para password, etc  
+    BANK_EPC = 0b001,    // Define producto y lo cambiamos
+    BANK_TID = 0b010,    // TID El identificador unico
+    BANK_User = 0b011,   // Banco usuario.
 };
 
 typedef struct
@@ -110,20 +110,20 @@ typedef struct
 
 enum t_Objetivo 
 {
-  obS0 = 0b000,
-  obS1 = 0b001,
-  obS2 = 0b010,
-  obS3 = 0b011,
-  obSL = 0b100,
-  obRFU = 0b101,
-  obRFU2 = 0b110,
-  obRFU3 = 0b111,
+  obSL = 0b000,   // Singular afecta por contenido banco memoria (EPC=1)
+  obS0 = 0b001,   // Sesion 0
+  obS1 = 0b010,   // Sesion 1
+  obS2 = 0b011,   // Sesion 2
+  obS3 = 0b100,   // Sesion 3
 } ;
 
 enum t_Accion 
 {
-  Incluir = 0b000,
-  NoIncluir = 0b001,
+  Coincide = 0b000,     // Coincidencia
+  NoCoincide = 0b001,   // Selecciona la no coincidentes
+  Inactivo = 0b010,   // Todas seleccionadas Select incativo
+  Inactivo2 = 0b011,   // Todas a no seleccionadas Select inavtivo 
+  Toggle = 0b100,   // Van cambiando de seleccionada a no, poco uso
 } ;
 
 enum t_Truncate

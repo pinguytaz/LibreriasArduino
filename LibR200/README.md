@@ -51,7 +51,18 @@ y despues inicializarla "Lector.iniciaR200()"
 |***bool escribeTAG(uint8_t *, t_BankMemory , unsigned int, unsigned int, uint8_t*, t_DatosTag*)**   |  Escribe un TAG |  
 
 <BR>  
-Tenemos varios ejemplos de su uso:  
+# Estructuras y tipos de interes  
+- **t_Tag** estructura que tiene datos de una etiqueta.  
+
+        - uint8_t RSSI  
+        - uint8_t PC_msb  
+        - uint8_t PC_lsb  
+        - int LongEPC  
+        - uint8_t *Datos_EPC  
+        - uint8_t CRC_msb  
+        - uint8_t CRC_lsb  
+  
+# Tenemos varios ejemplos de su uso:  
   
 - **VerificaLector** Nos da el firmware y datos configurados  
 - **LecturaTAG** Lectura de un TAG  
