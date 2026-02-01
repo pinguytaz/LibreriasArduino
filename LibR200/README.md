@@ -10,7 +10,7 @@ El autor __NO asume ninguna responsabilidad__ por la forma en que elija utilizar
   
 Usted ACEPTA USARLO BAJO SU PROPIO RIESGO.  
 
-##Comandos pendientes de implementar
+## Comandos pendientes de implementar
    Algunos comandos no se han implementado, por no encontrarles todavia uso interesante, así la clase ocupa menos memoria, y por su peligrosidad y poco uso.  
    De todas formas la implementación de nuevos comandos es sencilla con las base de la clase creada.  
 
@@ -22,12 +22,10 @@ Usted ACEPTA USARLO BAJO SU PROPIO RIESGO.
 - 0x1A Control de puerto de E/S  (4 puertos)  
 - 0xF2 y 0xF3 Para pruebas de RF  
 <BR>
-##Uso de LibR200
+## Uso de LibR200
 Libreria que  facilita la programación del lector "R200", lo primero que deberemos de hacer es crear la clase 
 R200 Lector(&Puerto);  
 y despues inicializarla "Lector.iniciaR200()"  
-
-  
 
 **Métodos LibR200**  
   
@@ -36,7 +34,7 @@ y despues inicializarla "Lector.iniciaR200()"
 |***R200(HardwareSerial*, int baud = 115200, uint8_t RxPin = 16, uint8_t TxPin = 17)**   | Constructor    |
 |**bool iniciaR200()**  |   Inicializa la clase  |  
 |**t_CodError get_Error()**  | Nos da el codigo del ultimo error producido   |  
-|**bool hw_info(t_Hardware*)** |0x03: Información de la placa|  
+|__bool hw_info(t_Hardware *)__ |0x03: Información de la placa|  
 |**t_Region get_Region(void)  bool set_Region(t_Region)** |0x08 0x07: Obtiene y programa la región de uso |  
 |**float get_Canal(void) bool set_Canal(uint8_t)** |0xAA 0xAB: obtiene y pone canal  |  
 |**int get_Potencia(void) bool set_Potencia(int)**   |0xB7 0xB6: Obtiene y define la potencia |  
@@ -45,8 +43,8 @@ y despues inicializarla "Lector.iniciaR200()"
 |**bool hopping(bool)**  |0xAD: Activa o desactiva hopping   |  
 |***bool insertCanales(uint8_t , uint8_t*)** |0xA9: Inserta canales de hopping |  
 |**bool transmisionContinua(bool)**  |0xB0: Activa o desactiva la transmisión continua |  
-|**int simplePool(t_Tag * , int )**  |0x22: Lectura simple de los TAGs a su alcance  |  
-|**bool setSelect(t_Objetivo, t_Accion, t_BankMemory, uint32_t, uint8_t*, unsigned int, t_Truncate)**  |0x0C: Pone parámetros de Select |  
+|**int simplePool(t_Tag * , int )**  |0x22: Lectura simple de los TAGs a su alcance  |    
+|__bool setSelect(t_Objetivo,t_Accion,t_BankMemory,uint32_t,uint8_t *,unsigned int, t_Truncate)__  |0x0C: Pone parámetros de Select |    
 |**t_Parametros getSelect(void)**  |0x0B: Obtiene parámetros de Select |  
 |**bool modoSelect(uint8_t)**  |0x12: pone modeo  Select (0x00 envia select antes de cualquier operación, 0x01 No envia CANCEL, 0x02 Envio pero no para pooling) |  
 |**bool leeTAG(uint8_t *, t_BankMemory , unsigned int, unsigned int, t_DatosTag*)** |  Lee datos de un TAG |  
