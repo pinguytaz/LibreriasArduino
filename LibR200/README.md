@@ -51,17 +51,45 @@ y despues inicializarla "Lector.iniciaR200()"
 |***bool escribeTAG(uint8_t *, t_BankMemory , unsigned int, unsigned int, uint8_t*, t_DatosTag*)**   |  Escribe un TAG |  
 
 <BR>  
-# Estructuras y tipos de interes  
-- **t_Tag** estructura que tiene datos de una etiqueta.  
-
-        - uint8_t RSSI  
-        - uint8_t PC_msb  
-        - uint8_t PC_lsb  
-        - int LongEPC  
-        - uint8_t *Datos_EPC  
-        - uint8_t CRC_msb  
-        - uint8_t CRC_lsb  
+# Estructuras de interes  
+    
+- **t_Hardware** Estructura con la información de Hardware.  
+       
+    - String vHW  
+    - String vSW  
+    - String fabricante    
+    
+- **t_Tag** estructura que tiene datos de una etiqueta y es retornada por el pooling.  
+    - uint8_t RSSI  
+    - uint8_t PC_msb  
+    - uint8_t PC_lsb  
+    - int LongEPC  
+    - uint8_t *Datos_EPC  
+    - uint8_t CRC_msb  
+    - uint8_t CRC_lsb  
+       
+- **t_DatosTag** Datos que nos retorna una lectura simple (comando 0x39)  
+       -  uint16_t PC  
+       - int longEP  
+       - ;uint8_t* Datos_EPC  
+       - t_BankMemory bancoMemoria  
+       - int longDatos  
+       - uint8_t* Datos  
+       
+# tipos de interes  
+    
+- **t_Region** Regiones  (Desconocido, China_900, US, EU, China_800, Korea)
+- **t_BankMemory**   Bancos de memoria para busquedas o lecturas: BANK_RFU (Reservado para password, etc), BANK_EPC (Define producto), BANK_TID (TID El identificador unico), BANK_User (Banco usuario)  
+- **t_Objetivo**  Indica el objetivo a filtrar por sesion (obS0, obS1, obS2, obS3) o el inventario obSL
+- **t_Accion**  Como seleccionar el indicador seleccionado: Coincide, NoCoincide  
+- **t_Truncate** NoTrunca, Trunca.  
+- **t_ModoSelect**  Selecciona el modo select o cuando lanza select ate pooling u otra acción: Siempre, Nunca, NoPooling.  
+- **t_Sel**  Tipo de selección: ALL, SL o NSL.  
+- **t_Session** Sesion de la etiqueta: S0, S1, S2, S3.  
+- **t_Target** Banderas de inventario: A o B.  
   
+Esta información se puede ampliar viendo los tipos en el fichero **tipos_LibR200.h**  
+   
 # Tenemos varios ejemplos de su uso:  
   
 - **VerificaLector** Nos da el firmware y datos configurados  

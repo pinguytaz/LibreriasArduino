@@ -2,7 +2,7 @@
  *  Autor: Fco. Javier Rodriguez Navarro
  *  WEB: www.pinguytaz.net
  *
- *  Descripción: Ejemplo de lectura mediante Select con la libreria LibR200
+ *  Descripción: Ejemplo de Pooling con SELECT con la libreria LibR200
  ********************************************************************************************/
  // INCLUDES
 #include <HardwareSerial.h>
@@ -41,22 +41,22 @@ void setup()
   Serial.printf("\n\tTruncate: %02X\n",parametros.Truncate);
 
   Serial.println("***************************  INICIO todo filtro 0x00 ***************************");
-  Lector.modoSelect(0x00);   // 00 filtro para todo pooling y lecturas/escritura, el 02 es solo L/E
+  Lector.modoSelect(Siempre);   // 00 filtro para todo pooling y lecturas/escritura, el 02 es solo L/E
   busca();
   Serial.println("***************************  FIN todo filtro 0x00 ***************************");
 
   Serial.println("***************************  INICIO sin filtro 0x01 ***************************");
-  Lector.modoSelect(0x01);  
+  Lector.modoSelect(Nunca);  
   busca();
   Serial.println("***************************  FIN todo filtro 0x01 ***************************"); 
 
   Serial.println("***************************  INICIO filtro solo L/E 0x02 ***************************");
-  Lector.modoSelect(0x02);  
+  Lector.modoSelect(NoPooling);  
   busca();
   Serial.println("***************************  FIN todo filtro 0x02 ***************************");
 
   Serial.println("***************************  INICIO todo filtro 0x00 segunda vez***************************");
-  Lector.modoSelect(0x00);   // 00 filtro para todo pooling y lecturas/escritura, el 02 es solo L/E el 0x01 cancela
+  Lector.modoSelect(Siempre);   // 00 filtro para todo pooling y lecturas/escritura, el 02 es solo L/E el 0x01 cancela
   busca();
   Serial.println("***************************  FIN todo filtro 0x00 segunda vez***************************");
 

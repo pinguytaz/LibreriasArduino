@@ -82,14 +82,6 @@ typedef struct
   uint8_t CRC_lsb;
 } t_Tag;
 
-/*enum t_BankMemory 
-{
-    BANK_RFU = 0x00,      // Reservada
-    BANK_EPC = 0x01,
-    BANK_TID = 0x02,
-    BANK_User = 0x03,
-};*/
-
 enum t_BankMemory 
 {
     BANK_RFU = 0b000,    // Reservado para password, etc  
@@ -108,9 +100,9 @@ typedef struct
   uint8_t* Datos;
 } t_DatosTag;
 
-enum t_Objetivo 
+enum t_Objetivo    
 {
-  obSL = 0b000,   // Singular afecta por contenido banco memoria (EPC=1)
+  obSL = 0b000,   // Inventario
   obS0 = 0b001,   // Sesion 0
   obS1 = 0b010,   // Sesion 1
   obS2 = 0b011,   // Sesion 2
@@ -121,15 +113,19 @@ enum t_Accion
 {
   Coincide = 0b000,     // Coincidencia
   NoCoincide = 0b001,   // Selecciona la no coincidentes
-  Inactivo = 0b010,   // Todas seleccionadas Select incativo
-  Inactivo2 = 0b011,   // Todas a no seleccionadas Select inavtivo 
-  Toggle = 0b100,   // Van cambiando de seleccionada a no, poco uso
 } ;
 
 enum t_Truncate
 {
   NoTrunca = 0x00,
   Trunca = 0x80,
+} ;
+
+enum t_ModoSelect
+{
+  Siempre = 0x00,
+  Nunca = 0x01,
+  NoPooling = 0x02,
 } ;
 
 typedef struct {
@@ -215,6 +211,5 @@ enum t_CodError
     ERR_LOCK_FAIL = 0x13,
     ERR_KILL_FAIL = 0x12,
 };
-
 
 #endif

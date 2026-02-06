@@ -674,7 +674,6 @@ bool R200::setSelect(t_Objetivo objetivo, t_Accion accion, t_BankMemory banco, u
   _commandFrame[12+longitud] = crc(_commandFrame,12+longitud);
   _commandFrame[13+longitud] = R200_FrameFinal;
 
-  Serial.println("Lanzamos comando ");
   bytesRecibidos = enviaComando(_commandFrame, 14+longitud);
   //if (bytesRecibidos > 0)
   
@@ -714,7 +713,7 @@ t_Parametros R200::getSelect(void)
           y 0x02(se pone al definir select) no envio en pooling si en lecturas o escrituras.
           Retorna true si todo correcto
 **********************/
-bool R200::modoSelect(uint8_t modo)
+bool R200::modoSelect(t_ModoSelect modo)
 {
   t_Parametros retorno;
   _commandFrame[0] = R200_FrameCabecera;

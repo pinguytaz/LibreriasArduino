@@ -50,7 +50,7 @@ class R200
       int simplePool(t_Tag* , int );
       bool setSelect(t_Objetivo, t_Accion, t_BankMemory, uint32_t, uint8_t*, unsigned int, t_Truncate);
       t_Parametros getSelect(void);
-      bool modoSelect(uint8_t);
+      bool modoSelect(t_ModoSelect);
       bool leeTAG(uint8_t*, t_BankMemory , unsigned int, unsigned int, t_DatosTag*);
       bool escribeTAG(uint8_t*, t_BankMemory , unsigned int, unsigned int, uint8_t*, t_DatosTag*);
 };
